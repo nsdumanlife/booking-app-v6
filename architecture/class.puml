@@ -1,6 +1,109 @@
-@startuml Person 
-class Person {
-  name: string
-  age: number
+@startuml Bungalow Booking Class Diagram
+class User{
+    firstName: string
+    lastName: string
+    email: string
+    age: number
+    bookings: [Booking]
+    ownedBungalows: [Bungalow]
+
+    constructor(firstName: string, lastName: string, email: string, age: number)
+    book(bungalow: Bungalow, checkInDate: Date, checkOutDate: Date)
+    review(bungalow: Bungalow, text: string, rate: number)
+    pay(amount: number)
+    cancelBooking(booking: Booking)
+
+    setPrice(bungalow: Bungalow, price: number)
+    disableDates(bungalow: Bungalow, startDate: Date, endDate: Date)
+    deleteBungalow(bungalow: Bungalow)
+    createBungalow(location: string, name: string, price: number, capacity: number)
+    addService(bungalow: Bungalow, service: Service)
+    addMedia(bungalow: Bungalow, media: Media)
 }
+
+class Bungalow{
+    id: number
+    name: string
+    location: string
+    capacity: number
+    price: number
+    owner: User
+    bookings: [Booking]
+    bookedDates: [Date]
+    reviews: [Review]
+    images: [Media]
+    services: [Service]
+    get rating(): number
+
+    checkAvailability(checkInDate: Date, checkOutDate: Date)
+    addBooking(booking: Booking)
+    removeBooking(booking: Booking)
+    addService(service: Service, owner: User)
+
+}
+
+class Booking{
+    id: number
+    guest: User
+    bungalow: Bungalow
+    checkInDate: Date
+    checkOutDate: Date
+    review: Review
+    cancelled: boolean
+    get status(): string
+    get bookingDates() : [string]
+    get totalPrice(): number
+
+    constructor(guest: User, bungalow: Bungalow, checkInDate: Date, checkOutDate: Date)
+    cancel()
+}
+
+class Review {
+    message: string
+    rate: number
+    author: User
+}
+class Service{
+    kind: ServiceType
+}
+enum ServiceType{
+    HOT_TUB
+    AIR_CONDITIONING
+    HEATING
+    FIREPLACE
+    FIRE_PIT
+    BBQ_GRILL
+    WIFI
+    REFRIGERATOR
+    MOUNTAIN_VIEW
+    LAKE_ACCESS
+    POOL
+}
+
+class Media {
+    source: string
+    kind: MediaType
+}
+
+enum MediaType {
+    PHOTO
+    VIDEO
+}
+
+class Payment{
+    amount: number
+}
+
+Bungalow *- Review
+Bungalow *- Service
+Service --> ServiceType
+Bungalow *- Media
+Media --> MediaType
+User --> Review
+User "1" o-->"0..*" Booking
+Booking "1" o-->"1" User
+Booking "1" <--o "1" Bungalow
+Booking o--> Bungalow
+Booking o-> Payment
+
 @enduml

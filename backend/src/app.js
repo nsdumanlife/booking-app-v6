@@ -1,4 +1,4 @@
-require('dotenv').config({ debug: process.env.DEBUG, path: '../.env' })
+require('dotenv').config({ debug: process.env.DEBUG })
 const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
@@ -8,6 +8,8 @@ const logger = require('morgan')
 require('./database-connection')
 
 const indexRouter = require('./routes/index')
+const bookingsRouter = require('./routes/bookings')
+const bungalowsRouter = require('./routes/bungalows')
 const usersRouter = require('./routes/users')
 
 const app = express()
@@ -23,8 +25,10 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
-app.use('/api/', indexRouter)
+app.use('/api/bookings', bookingsRouter)
+app.use('/api/bungalows', bungalowsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/', indexRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

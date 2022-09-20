@@ -8,6 +8,7 @@ header
     RouterLink(to="/") Home
     RouterLink(to="/about") About
     RouterLink(to="/bungalows") Bungalows
+    RouterLink(to="/bookings") Bookings
 
 RouterView 
 </template>

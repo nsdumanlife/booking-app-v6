@@ -2,29 +2,24 @@
 import axios from 'axios'
 
 export default {
-  name: 'BungalowDetail',
+  name: 'Bungalow',
   components: {},
   data() {
     return {
-      bungalow: [],
+      bungalow: null,
     }
   },
-  async getBungalow() {
-    const bungalowRequest = await axios.get(`http://localhost:4000/api/bungalows/${bungalowId}`)
+  async created() {
+    const bungalowRequest = await axios.get(`http://localhost:4000/api/bungalows/${this.$route.params.bungalowId}`)
 
-    this.bungalows = bungalowRequest.data
-  },
-  computed: {
-    bungalowId() {
-      return this.$route.params.id
-    },
+    this.bungalow = bungalowRequest.data
   },
 }
 </script>
 
 <template lang="pug">
 main.bungalow
-  h1 Rent a Bungalow for Your Next Escape
+  h1 hello from {{bungalow.name}} bungalow detail 
  
 
 </template>

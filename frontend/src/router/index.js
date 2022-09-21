@@ -21,6 +21,7 @@ const router = createRouter({
     },
     {
       path: '/bungalows/:bungalowId',
+      name: 'bungalow',
       component: () => import('../views/bungalow-detail-view.vue'),
     },
     {

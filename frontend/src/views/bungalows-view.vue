@@ -21,7 +21,10 @@ export default {
 <template lang="pug">
 main.bungalow-list
   h1 Rent a Bungalow for Your Next Escape
-  BungalowCard(v-for="bungalow in bungalows" :bungalow="bungalow")
+
+  router-link(:to="`/bungalows/${bungalow._id}`" v-for="bungalow in bungalows") 
+    BungalowCard(:bungalow="bungalow")
+    
 
 </template>
 

@@ -11,14 +11,14 @@ export default {
 <template lang="pug">
 .bungalow-list-item
   //- form(action=`/bookings`, method='post')
-  a(href=``)
-    h3 Bungalow {{bungalow.name[0].toUpperCase() + bungalow.name.substring(1)}}
-    h4 {{bungalow.location}}
-    p {{bungalow.price}} TRY
-    //- p(v-if="bungalow.rating")
-    //-   | {{bungalow.rating}} star{{bungalow.rating > 1 ? 's' : ''}} - {{bungalow.reviews.length}} review{{bungalow.reviews.length > 1 ? 's' : ''}}
-    //- p(v-else)
-    //-   | No review yet!
+  //- router-link(:to="`/bungalows/${bungalow._id}`") {{ bungalow.name}}
+  h3 Bungalow {{bungalow.name[0].toUpperCase() + bungalow.name.substring(1)}}
+  h4 {{bungalow.location}}
+  p {{bungalow.price}} TRY
+  //- p(v-if="bungalow.rating")
+  //-   | {{bungalow.rating}} star{{bungalow.rating > 1 ? 's' : ''}} - {{bungalow.reviews.length}} review{{bungalow.reviews.length > 1 ? 's' : ''}}
+  //- p(v-else)
+  //-   | No review yet!
   //- span Check-in date&nbsp;
   //- input(type='date' name='checkInDate' value='2022-10-01')
   //- span Check-out date&nbsp;

@@ -1,6 +1,7 @@
 <script>
 import BookingCard from '@/components/booking-card.vue'
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Bookings',
@@ -11,9 +12,10 @@ export default {
     }
   },
   async created() {
-    const bookingsRequest = await axios.get('http://localhost:4000/api/bookings')
-
-    this.bookings = bookingsRequest.data
+    this.bookings = await this.fetchBookings()
+  },
+  methods: {
+    ...mapActions(['fetchBookings']),
   },
 }
 </script>

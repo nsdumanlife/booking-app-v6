@@ -1,6 +1,7 @@
 <script>
 import BungalowCard from '@/components/bungalow-card.vue'
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Bungalows',
@@ -11,9 +12,10 @@ export default {
     }
   },
   async created() {
-    const bungalowsRequest = await axios.get('http://localhost:4000/api/bungalows')
-
-    this.bungalows = bungalowsRequest.data
+    this.bungalows = await this.fetchBungalows()
+  },
+  methods: {
+    ...mapActions(['fetchBungalows']),
   },
 }
 </script>

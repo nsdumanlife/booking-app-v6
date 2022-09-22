@@ -37,11 +37,7 @@ router.get('/:bungalowId', async (req, res, next) => {
     const bungalow = await Bungalow.findById(req.params.bungalowId)
 
     if (bungalow) return res.send(bungalow)
-    // if (bungalow)
-    //   res.render('bungalow', {
-    //     title: `Bungalow ${bungalow.name[0].toUpperCase() + bungalow.name.substring(1)}`,
-    //     bungalow,
-    //   })
+
     return res.sendStatus(404)
   } catch (e) {
     return next(e)

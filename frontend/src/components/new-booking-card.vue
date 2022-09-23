@@ -8,22 +8,20 @@ export default {
     return {
       checkInDate: '',
       checkOutDate: '',
-      invalidInput: false,
+      error: null,
     }
   },
   methods: {
     async submitBooking() {
-      if (this.checkInDate === '' || this.checkOutDate === '') {
-        this.invalidInput = true
-        return
+      try {
+        const bookingRequest = await axios.post('http://localhost:4000/api/bookings', {
+          checkInDate: this.checkInDate,
+          checkOutDate: this.checkOutDate,
+          bungalowId: this.bungalow._id,
+        })
+      } catch (e) {
+        this.error = e.response.data.msg
       }
-      this.invalidInput = false
-
-      await axios.post('http://localhost:4000/api/bookings', {
-        checkInDate: this.checkInDate,
-        checkOutDate: this.checkOutDate,
-        bungalowId: this.bungalow._id,
-      })
     },
   },
 }
@@ -39,9 +37,9 @@ form.new-booking-card(@submit.prevent="submitBooking")
   .mb-3
     label.form-label(for='checkOutDate') Check-out date
       input.form-control.check-out-date(type='date' name='checkOutDate' v-model="checkOutDate" required) 
-    p(v-if="invalidInput")
-      | One or more date fields are invalid.
   input.btn.btn-success(type="submit", value="Book now")
+  p(v-if="error")
+    | {{error}}
 </template>
 
 <style scoped>

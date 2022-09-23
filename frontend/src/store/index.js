@@ -4,7 +4,12 @@ import { createStore } from 'vuex'
 const mutations = {}
 
 export default createStore({
-  state: {},
+  state: {
+    checkInDate: '',
+    checkOutDate: '',
+    guest: 2,
+    location: 'Sapanca',
+  },
   mutations: {},
   actions: {
     async fetchBungalow(store, id) {

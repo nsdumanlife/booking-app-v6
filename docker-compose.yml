@@ -1,14 +1,14 @@
 version: '3'
 services:
   frontend:
-    container_name: sose-frontend
+    container_name: frontend
     image: frontend
     build:
       context: frontend
       dockerfile: dev.Dockerfile
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`picories.localhost`)
+      - traefik.http.routers.frontend.rule=Host(`bungaa.localhost`)
       - traefik.http.routers.frontend.entrypoints=web
     ports:
       - 8080
@@ -18,16 +18,16 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
   backend:
-    container_name: sose-backend
+    container_name: backend
     image: backend
     build:
       context: backend
       dockerfile: dev.Dockerfile
     environment:
-      - MONGODB_CONNECTION_STRING=mongodb://mongo/mongodb
+      - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend.rule=(Host(`picories.localhost`) && PathPrefix(`/api`))
+      - traefik.http.routers.backend.rule=(Host(`bungaa.localhost`) && PathPrefix(`/api`))
       - traefik.http.routers.backend.entrypoints=web
     ports:
       - 4444:4444
@@ -36,12 +36,12 @@ services:
       - ./backend/src:/app/src
       - ./backend/test:/app/test
   mongo:
-    container_name: sose-mongo
+    container_name: mongo
     image: mongo
     ports:
       - 27019:27017
   load-balancer:
-    container_name: sose-load-balancer
+    container_name: load-balancer
     image: traefik:v2.7
     command: 
       - --api.insecure=true

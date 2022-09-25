@@ -5,10 +5,21 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const cors = require('cors')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
+const mongoose = require('mongoose')
+const passport = require('passport')
+const User = require('./models/user')
+
+const secret = process.env.SECRET || 'thisshouldbeabettersecret'
+const validateSecret = process.env.VALIDATE_SECRET || 'thisshouldbeabettersecret'
 
 require('./database-connection')
 
+const clientPromise = mongoose.connection.asPromise().then(connection => connection.getClient())
+
 const indexRouter = require('./routes/index')
+const accountRouter = require('./routes/account')
 const bookingsRouter = require('./routes/bookings')
 const bungalowsRouter = require('./routes/bungalows')
 const usersRouter = require('./routes/users')
@@ -30,12 +41,31 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(
+  session({
+    secret: [secret, validateSecret],
+    store: MongoStore.create({ clientPromise, stringify: false }),
+    cookie: {
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      path: '/api',
+    },
+  })
+)
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(User.createStrategy())
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
 app.use('/api/bookings', bookingsRouter)
 app.use('/api/bungalows', bungalowsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/account', accountRouter)
 app.use('/api/', indexRouter)
 
 // catch 404 and forward to error handler

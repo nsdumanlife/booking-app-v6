@@ -12,7 +12,7 @@ export default {
 .bungalow-list-item
   //- form(action=`/bookings`, method='post')
   //- router-link(:to="`/bungalows/${bungalow._id}`") {{ bungalow.name}}
-  h3 Bungalow {{bungalow.name[0].toUpperCase() + bungalow.name.substring(1)}}
+  h3 {{ bungalow.name }} 
   h4 {{bungalow.location}}
   p {{bungalow.price}} TRY
   //- p(v-if="bungalow.rating")

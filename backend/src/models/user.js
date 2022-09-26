@@ -95,6 +95,6 @@ class User {
 
 userSchema.loadClass(User)
 userSchema.plugin(autopopulate)
-userSchema.plugin(passportLocalMongoose)
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' })
 
 module.exports = mongoose.model('User', userSchema)

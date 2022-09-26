@@ -18,11 +18,18 @@ router.get('/', async (req, res, next) => {
     const user = await getLoggedInUser()
 
     if (req.query.name) {
-      const bungalow = await Bungalow.findOne({
-        name: `${req.query.name.toLowerCase()}`,
+      const bungalow = await Bungalow.find({
+        name: { $regex: `${req.query.name}`, $options: 'i' },
       })
+
       return res.send(bungalow)
-      // return res.redirect(`/bungalows/${bungalow.id}`)
+    }
+    if (req.query.location) {
+      const bungalow = await Bungalow.find({
+        location: { $regex: `${req.query.location}`, $options: 'i' },
+      })
+
+      return res.send(bungalow)
     }
 
     return res.send(bungalows)
@@ -68,14 +75,8 @@ router.post('/', async (req, res, next) => {
   try {
     const user = await getLoggedInUser()
 
-    const bungalow = await user.createBungalow(
-      req.body.name.toLowerCase(),
-      req.body.location.toLowerCase(),
-      req.body.capacity,
-      req.body.price
-    )
+    const bungalow = await user.createBungalow(req.body.name, req.body.location, req.body.capacity, req.body.price)
     return res.send(bungalow)
-    // return res.redirect(`/bungalows/${bungalow.id}`)
   } catch (e) {
     return next(e)
   }

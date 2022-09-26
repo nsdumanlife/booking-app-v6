@@ -5,11 +5,14 @@ import { RouterLink, RouterView } from 'vue-router'
 <template lang="pug">
 header
   nav
+    .container
+    a.navbar-brand(href='#')
+      img.d-inline-block.align-text-top.logo(src='./components/icons/hut-svgrepo-com.svg' alt='Bungaa' width='30' height='30')
+      span Bungaa
     RouterLink(to="/") Home
     RouterLink(to="/about") About
     RouterLink(to="/bungalows") Bungalows
     RouterLink(to="/bookings") Bookings
-
 RouterView 
 </template>
 
@@ -29,6 +32,7 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
+  color: #00bd7e;
 }
 
 nav a.router-link-exact-active {
@@ -53,7 +57,6 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
   }
 
   .logo {

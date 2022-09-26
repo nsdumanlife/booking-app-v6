@@ -29,10 +29,9 @@ router.post('/', async (req, res, next) => {
 
     const user = await getLoggedInUser()
     const booking = await user.book(bungalow, new Date(req.body.checkInDate), new Date(req.body.checkOutDate))
-
     return res.send(booking)
   } catch (e) {
-    return next(e)
+    return res.status(400).send({ msg: e.message, status: 400 })
   }
 })
 

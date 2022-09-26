@@ -1,37 +1,30 @@
 <script>
-import BungalowCard from '@/components/bungalow-card.vue'
-import axios from 'axios'
+import BungalowsListing from '@/components/bungalows-listing.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Bungalows',
-  components: { BungalowCard },
-  data() {
-    return {
-      bungalows: [],
-    }
+  components: { BungalowsListing },
+  // data() {
+  //   return {
+  //     bungalows: [],
+  //   }
+  // },
+  // async mounted() {
+  //   this.bungalows = await this.fetchBungalows()
+  // },
+  methods: {
+    ...mapActions(['fetchBungalows', 'fetchFilteredBungalows']),
   },
-  async created() {
-    const bungalowsRequest = await axios.get('http://localhost:4000/api/bungalows')
-
-    this.bungalows = bungalowsRequest.data
+  computed: {
+    ...mapState(['checInDate', 'checkOutDate', 'guest', 'location', 'bungalows']),
   },
 }
 </script>
 
 <template lang="pug">
-main.bungalow-list
-  h1 Rent a Bungalow for Your Next Escape
-
-  router-link(:to="`/bungalows/${bungalow._id}`" v-for="bungalow in bungalows") 
-    BungalowCard(:bungalow="bungalow")
-    
-
+.bungalow-list
+  BungalowsListing(:bungalows='bungalows')
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .bungalow-list {
-    min-height: 100vh;
-  }
-}
-</style>
+<style></style>

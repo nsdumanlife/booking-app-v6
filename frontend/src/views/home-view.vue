@@ -1,9 +1,13 @@
-<script setup>
-import TheWelcome from '../components/the-welcome.vue'
+<script>
+import SearchBar from '@/components/search-bar.vue'
+
+export default {
+  name: 'HomeView',
+  components: { SearchBar },
+}
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
+<template lang="pug">
+main
+  SearchBar
 </template>

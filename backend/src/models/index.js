@@ -4,9 +4,22 @@ const Image = require('./image')
 
 async function main() {
   // Users
-  const numan = await User.create({ firstName: 'Numan', lastName: 'Duman', email: 'nsduman@gmail.com', age: 29 })
+  // const numan = await User.create({ firstName: 'Numan', lastName: 'Duman', email: 'nsduman@gmail.com', age: 29 })
 
-  const faruk = await User.create({ firstName: 'Faruk', lastName: 'Duman', email: 'f@gmail.com', age: 26 })
+  const numan = new User({
+    username: 'Numan',
+    firstName: 'Numan',
+    lastName: 'Duman',
+    age: 29,
+    email: 'nsduman@gmail.com',
+  })
+  await numan.setPassword('test')
+  await numan.save()
+
+  // const faruk = await User.create({ firstName: 'Faruk', lastName: 'Duman', email: 'f@gmail.com', age: 26 })
+  const faruk = new User({ username: 'Faruk', firstName: 'Faruk', lastName: 'Duman', age: 26, email: 'f@gmail.com' })
+  await faruk.setPassword('test')
+  await faruk.save()
 
   // Bungalows
   const tepe = await Bungalow.create({

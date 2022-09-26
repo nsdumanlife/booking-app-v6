@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NewBookingCard',
@@ -12,13 +13,20 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['createBooking']),
     async submitBooking() {
       try {
-        const bookingRequest = await axios.post('http://localhost:4000/api/bookings', {
+        await this.createBooking({
           checkInDate: this.checkInDate,
           checkOutDate: this.checkOutDate,
           bungalowId: this.bungalow._id,
         })
+
+        // await axios.post('http://localhost:4000/api/bookings', {
+        //   checkInDate: this.checkInDate,
+        //   checkOutDate: this.checkOutDate,
+        //   bungalowId: this.bungalow._id,
+        // })
       } catch (e) {
         this.error = e.response.data.msg
       }
@@ -28,7 +36,6 @@ export default {
 </script>
 
 <template lang="pug">
-//- form.new-booking-card(action='http://localhost:4000/api/bookings' method='post')
 form.new-booking-card(@submit.prevent="submitBooking")
   h5.mb-3.card-title {{bungalow.price}} TRY / night
   .mb-3

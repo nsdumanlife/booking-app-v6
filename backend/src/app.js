@@ -43,11 +43,15 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(
   session({
+    saveUninitialized: false,
+    resave: false,
     secret: [secret, validateSecret],
     store: MongoStore.create({ clientPromise, stringify: false }),
     cookie: {
       maxAge: 14 * 24 * 60 * 60 * 1000,
       path: '/api',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      secure: process.env.NODE_ENV === 'production',
     },
   })
 )
@@ -60,7 +64,7 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+// app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
 app.use('/api/bookings', bookingsRouter)
 app.use('/api/bungalows', bungalowsRouter)

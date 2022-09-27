@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const getDays = require('../helper/get-booking-days')
+const Image = require('./image')
 
 const bungalowSchema = new mongoose.Schema(
   {

@@ -92,7 +92,7 @@ async function main() {
 
 // main()
 
-module.exports = async function getLoggedInUser() {
-  const loggedInUser = await User.findOne({ firstName: 'Numan' })
-  return loggedInUser
-}
+// module.exports = async function getLoggedInUser() {
+//   const loggedInUser = await User.findOne({ firstName: 'Numan' })
+//   return loggedInUser
+// }

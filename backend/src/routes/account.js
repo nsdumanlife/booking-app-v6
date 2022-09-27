@@ -12,14 +12,6 @@ router.post('/', async (req, res, next) => {
   const { firstName, lastName, age, email, password } = req.body
 
   try {
-    // const userToCreate = {
-    //   firstName: req.body.firstName,
-    //   lastName: req.body.lastName,
-    //   age: req.body.age,
-    //   email: req.body.email,
-    //   password: req.body.password,
-    // }
-
     const user = await User.register({ firstName, lastName, age, email }, password)
     // await user.setPassword(req.body.password)
     // await user.save()

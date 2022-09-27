@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const autopopulate = require('mongoose-autopopulate')
 
 const imageSchema = new mongoose.Schema({
   src: String,
@@ -10,5 +11,6 @@ const imageSchema = new mongoose.Schema({
 // }
 
 // imageSchema.loadClass(Image)
+imageSchema.plugin(autopopulate)
 
 module.exports = mongoose.model('Image', imageSchema)

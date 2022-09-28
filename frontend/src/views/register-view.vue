@@ -39,19 +39,18 @@ export default {
   form(@submit.prevent='submitRegister')
     h1 Create a new account
     label(for='firstName') First Name:&nbsp;
-      input(v-model='firstName' id='firstName' type='text' placeholder='Enter your first name' required)
+      input#firstName(v-model='firstName', type='text', placeholder='Enter your first name', required)
     label(for='lastName') Last Name:&nbsp;
-      input(v-model='lastName' id='lastName' type='text' placeholder='Enter your last name' required)
+      input#lastName(v-model='lastName', type='text', placeholder='Enter your last name', required)
     label(for='age') Age:&nbsp;
-      input(v-model='age' id='age' type='number' placeholder='Enter your age' required)
+      input#age(v-model='age', type='number', placeholder='Enter your age', required)
     label(for='email') Email:&nbsp;
-      input(v-model='email' id='email' type='text' placeholder='Enter your email' required)
+      input#email(v-model='email', type='text', placeholder='Enter your email', required)
     label(for='password') Password:&nbsp;
-      input(v-model='password' id='password' type='password' placeholder='Enter your password' required)
-    input(type='submit' value='Register')
+      input#password(v-model='password', type='password', placeholder='Enter your password', required)
+    input(type='submit', value='Register')
   div(v-if='backendError') {{ backendError }}
-  div Already have an account? <router-link to="/login">Log  in</router-link>
-
+  div Already have an account? <router-link to="/login">Log in</router-link>
 </template>
 
 <style lang="scss" scoped>

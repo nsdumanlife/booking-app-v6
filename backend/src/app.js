@@ -33,6 +33,8 @@ app.use(
   })
 )
 
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
@@ -64,7 +66,6 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 app.use(express.static(path.join(__dirname, 'public')))
-// app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
 app.use('/api/bookings', bookingsRouter)
 app.use('/api/bungalows', bungalowsRouter)

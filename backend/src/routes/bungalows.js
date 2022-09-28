@@ -1,6 +1,5 @@
 const express = require('express')
 const Bungalow = require('../models/bungalow')
-const getLoggedInUser = require('../models/index')
 
 const router = express.Router()
 
@@ -14,8 +13,6 @@ router.get('/', async (req, res, next) => {
         error: { status: 404 },
         message: `No bungalow found`,
       })
-
-    const user = await getLoggedInUser()
 
     if (req.query.name) {
       const bungalow = await Bungalow.find({
@@ -33,7 +30,6 @@ router.get('/', async (req, res, next) => {
     }
 
     return res.send(bungalows)
-    // return res.render('bungalows', { title: `Rent a Bungalow for Your Next Escape`, bungalows, user })
   } catch (e) {
     return next(e)
   }
@@ -62,8 +58,7 @@ router.post('/:bungalowId/reviews', async (req, res, next) => {
         message: `No bungalow found`,
       })
 
-    const user = await getLoggedInUser()
-    const review = await user.review(bungalow, req.body.text, req.body.rate)
+    const review = await req.user.review(bungalow, req.body.text, req.body.rate)
     return res.send(review)
     // return res.redirect(`/bungalows/${bungalow.id}`)
   } catch (e) {
@@ -73,9 +68,8 @@ router.post('/:bungalowId/reviews', async (req, res, next) => {
 /* POST/create new bungalow */
 router.post('/', async (req, res, next) => {
   try {
-    const user = await getLoggedInUser()
+    const bungalow = await req.user.createBungalow(req.body.name, req.body.location, req.body.capacity, req.body.price)
 
-    const bungalow = await user.createBungalow(req.body.name, req.body.location, req.body.capacity, req.body.price)
     return res.send(bungalow)
   } catch (e) {
     return next(e)

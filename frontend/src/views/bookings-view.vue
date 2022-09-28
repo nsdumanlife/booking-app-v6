@@ -1,6 +1,5 @@
 <script>
 import BookingCard from '@/components/booking-card.vue'
-import axios from 'axios'
 import { mapActions } from 'vuex'
 
 export default {
@@ -9,10 +8,15 @@ export default {
   data() {
     return {
       bookings: [],
+      error: null,
     }
   },
   async created() {
-    this.bookings = await this.fetchBookings()
+    try {
+      this.bookings = await this.fetchBookings()
+    } catch (e) {
+      this.error = e.message
+    }
   },
   methods: {
     ...mapActions(['fetchBookings']),
@@ -23,8 +27,9 @@ export default {
 <template lang="pug">
 main.bookings-list
   h1 Your bookings
-  BookingCard(v-for="booking in bookings" :booking="booking")
-
+  BookingCard(v-for='booking in bookings', :booking='booking')
+  p(v-if='error') 
+    | {{ error }}
 </template>
 
 <style>

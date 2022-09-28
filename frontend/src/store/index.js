@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { createStore } from 'vuex'
 axios.defaults.baseURL = 'http://localhost:4000/api'
+// axios.defaults.withCredentials = true
 
 const Mutations = {
   SET_CHECKINDATE: 'SET_CHECKINDATE',
@@ -72,7 +73,7 @@ export default createStore({
       return filteredBungalowsRequest.data
     },
     async fetchBookings() {
-      const bookingsRequest = await axios.get(`/api/bookings/`)
+      const bookingsRequest = await axios.get(`/bookings/`)
       return bookingsRequest.data
     },
     async fetchSession({ commit }) {
@@ -88,7 +89,7 @@ export default createStore({
       }
     },
     async register(store, user) {
-      return axios.post('/api/account', user)
+      return axios.post('/account', user)
     },
     async logout({ commit }) {
       await axios.delete('/account/session')

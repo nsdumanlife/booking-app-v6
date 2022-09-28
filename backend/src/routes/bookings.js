@@ -8,8 +8,8 @@ const router = express.Router()
 router.get('/', async (req, res, next) => {
   try {
     // req.isLoggedIn? throw 401 error
-    if (!req.isLoggedIn) res.status(401).send('You need to login')
-
+    // if (!req.isLoggedIn) res.status(401).send('You need to login')
+    console.log('Bookings req: ', req.headers)
     return res.send(req.user.bookings)
     // return res.render('bookings', { title: 'Bookings', user, loggedIn: true })
   } catch (e) {

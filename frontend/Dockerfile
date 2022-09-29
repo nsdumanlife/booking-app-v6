@@ -21,4 +21,5 @@ RUN npm i -g serve
 
 COPY --from=BUILDER /app/dist ./
 
+# -s allows single-page application mode, -l enables to choose the Port
 CMD serve -s -l $PORT

@@ -6,4 +6,3 @@ node_modules/
 test
 jest.config.js
 jest.config.setup
-Dockerfile

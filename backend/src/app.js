@@ -28,10 +28,17 @@ const app = express()
 
 app.use(
   cors({
+    // enables requests from any domain, not safe, further add only the domain you want
     origin: true,
+    // allows cookies
     credentials: true,
   })
 )
+
+app.set('trust proxy', 1)
+
+// after socket.io lecture add below line
+// app.set('io', socketService)
 
 app.use('/favicon.ico', express.static(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 

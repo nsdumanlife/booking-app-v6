@@ -10,7 +10,6 @@
     "eslint:check": "npx eslint .",
     "eslint:fix": "npx eslint --fix .",
     "lint": "lint-staged",
-    "prepare": "cd .. && husky install backend/.husky",
     "test": "jest --testEnvironment=node --verbose --forceExit --watchAll --maxWorkers=1",
     "test-coverage": "jest --collect-coverage --testEnvironment=node --forceExit --maxWorkers=1"
   },

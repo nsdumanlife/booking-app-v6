@@ -6,7 +6,7 @@ ADD package.json package-lock.json ./
 
 RUN npm install
 
-ADD .prettierrc.json .eslintrc.cjs vite.config.js ./
+ADD .prettierrc.json .eslintrc.cjs vite.config.js index.html .env.production ./
 
 ADD src ./src
 ADD public ./public
@@ -21,4 +21,5 @@ RUN npm i -g serve
 
 COPY --from=BUILDER /app/dist ./
 
+# -s allows single-page application mode, -l enables to choose the Port
 CMD serve -s -l $PORT

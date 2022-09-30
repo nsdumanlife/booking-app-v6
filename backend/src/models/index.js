@@ -2,6 +2,7 @@ const Bungalow = require('./bungalow')
 const User = require('./user')
 const Image = require('./image')
 
+// eslint-disable-next-line no-unused-vars
 async function main() {
   // Users
   // const numan = await User.create({ firstName: 'Numan', lastName: 'Duman', email: 'nsduman@gmail.com', age: 29 })

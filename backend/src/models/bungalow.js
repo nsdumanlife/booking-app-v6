@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const autopopulate = require('mongoose-autopopulate')
 const getDays = require('../helper/get-booking-days')
+// Do not remove this line, it throws error.
+// eslint-disable-next-line no-unused-vars
 const Image = require('./image')
 
 const bungalowSchema = new mongoose.Schema(

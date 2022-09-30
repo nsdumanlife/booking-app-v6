@@ -1,8 +1,11 @@
 /* eslint-disable no-useless-catch */
 import axios from 'axios'
 import { createStore } from 'vuex'
-axios.defaults.baseURL = 'http://localhost:4000/api'
-// axios.defaults.withCredentials = true
+axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_URL
+axios.defaults.withCredentials = true
+
+//TODO: after socket.io lecture, you need to add here
+// const socket = io(process.env.VUE_APP_BASE_URL)
 
 const Mutations = {
   SET_CHECKINDATE: 'SET_CHECKINDATE',
@@ -60,43 +63,43 @@ export default createStore({
       commit(Mutations.SET_BUNGALOWS, bungalows)
     },
     async fetchBungalow(store, id) {
-      const bungalowRequest = await axios.get(`/bungalows/${id}`)
+      const bungalowRequest = await axios.get(`/api/bungalows/${id}`)
       return bungalowRequest.data
     },
     async fetchBungalows() {
-      const bungalowsRequest = await axios.get(`/bungalows/`)
+      const bungalowsRequest = await axios.get(`/api/bungalows/`)
       return bungalowsRequest.data
     },
     async fetchFilteredBungalows(store, location) {
-      const filteredBungalowsRequest = await axios.get(`/bungalows?location=${location}`)
+      const filteredBungalowsRequest = await axios.get(`/api/bungalows?location=${location}`)
 
       return filteredBungalowsRequest.data
     },
     async fetchBookings() {
-      const bookingsRequest = await axios.get(`/bookings/`)
+      const bookingsRequest = await axios.get(`/api/bookings/`)
       return bookingsRequest.data
     },
     async fetchSession({ commit }) {
-      const user = await axios.get('/account/session')
+      const user = await axios.get('/api/account/session')
       commit(Mutations.SET_USER, user.data || null)
     },
     async login({ commit }, credentials) {
       try {
-        const user = await axios.post('/account/session', credentials)
+        const user = await axios.post('/api/account/session', credentials)
         commit(Mutations.SET_USER, user.data)
       } catch (e) {
         throw e
       }
     },
     async register(store, user) {
-      return axios.post('/account', user)
+      return axios.post('/api/account', user)
     },
     async logout({ commit }) {
-      await axios.delete('/account/session')
+      await axios.delete('/api/account/session')
       commit(Mutations.SET_USER, null)
     },
     async createBooking(store, booking) {
-      return axios.post('/bookings', booking)
+      return axios.post('/api/bookings', booking)
     },
   },
   modules: {},

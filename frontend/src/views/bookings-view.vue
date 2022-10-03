@@ -32,10 +32,4 @@ main.bookings-list
     | {{ error }}
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .booking-list {
-    min-height: 100vh;
-  }
-}
-</style>
+<style></style>

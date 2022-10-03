@@ -2,7 +2,6 @@
 import NewBookingCard from '@/components/new-booking-card.vue'
 import Review from '@/components/review.vue'
 import { mapActions } from 'vuex'
-import axios from 'axios'
 
 export default {
   name: 'Bungalow',
@@ -30,18 +29,17 @@ main.bungalow
     | {{bungalow.rating}} star{{bungalow.rating > 1 ? 's' : ''}} {{bungalow.reviews.length}} review{{bungalow.reviews.length > 1 ? 's' : ''}}
   p {{ bungalow.location }}
   .image(v-for="image in bungalow.images")
-    //- img(src=`${image.src}`, alt= `${image.alt}`) 
-    img(src=`@/assets/logo.svg` height='125')
+    img(:src='image.src', :alt= 'image.alt')
   h4 Services
   p It is empty for now, i haven't work enums in mongoose yet :(
   .services(v-for="service in bungalow.services")
     p Service Name Here
   NewBookingCard(:bungalow='bungalow')
-  h3 Reviews of Bugnalow {{ bungalow.name }}
+  h3 Reviews of Bungalow {{ bungalow.name }}
   .rating(v-if="!bungalow.rating")
     | No reviews yet!
   .rating(v-else)
-    | Review(:bungalow='bungalow')
+    Review(:bungalow='bungalow')
   
  
 

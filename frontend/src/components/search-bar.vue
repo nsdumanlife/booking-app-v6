@@ -1,7 +1,9 @@
 <script>
 import { mapActions } from 'vuex'
+
 export default {
   name: 'SearchBar',
+  components: {},
   computed: {
     location: {
       get() {
@@ -42,27 +44,29 @@ export default {
       const filteredBungalows = await this.fetchFilteredBungalows(this.location)
 
       this.$store.dispatch('setBungalows', filteredBungalows)
+      this.$router.push('/bungalows')
     },
   },
 }
 </script>
 
 <template lang="pug">
-form.search-bar.row(@submit.prevent='submitFormAndUpdateBungalows')
-  .col
-    label.form-label(for='location') Where to?
-      input#location.form-control(type='text', name='location', placeholder='Sapanca', v-model='location')
-  .col
-    label.form-label(for='checkInDate') Check-in date
-      input#checkInDate.form-control(type='date', name='checkInDate', v-model='checkInDate')
-  .col
-    label.form-label(for='checkOutDate') Check-out date
-      input#checkOutDate.form-control(type='date', name='checkOutDate', v-model='checkOutDate')
-  .col
-    label.form-label(for='guestNumber') Guest:
-      input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest')
-  .col.pt-4
-    input.btn.btn-success(type='submit', value='Search')
+.search-bar
+  form.row(@submit.prevent='submitFormAndUpdateBungalows')
+    .col
+      label.form-label(for='location') Where to?
+        input#location.form-control(type='text', name='location', placeholder='Sapanca', v-model='location')
+    .col
+      label.form-label(for='checkInDate') Check-in date
+        input#checkInDate.form-control(type='date', name='checkInDate', v-model='checkInDate')
+    .col
+      label.form-label(for='checkOutDate') Check-out date
+        input#checkOutDate.form-control(type='date', name='checkOutDate', v-model='checkOutDate')
+    .col
+      label.form-label(for='guestNumber') Guest:
+        input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest', min='2')
+    .col.pt-4
+      input.btn.btn-success(type='submit', value='Search')
 </template>
 
 <style scoped>

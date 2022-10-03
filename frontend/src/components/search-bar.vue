@@ -44,6 +44,7 @@ export default {
       const filteredBungalows = await this.fetchFilteredBungalows(this.location)
 
       this.$store.dispatch('setBungalows', filteredBungalows)
+      this.$router.push('/bungalows')
     },
   },
 }
@@ -63,7 +64,7 @@ export default {
         input#checkOutDate.form-control(type='date', name='checkOutDate', v-model='checkOutDate')
     .col
       label.form-label(for='guestNumber') Guest:
-        input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest')
+        input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest', min='2')
     .col.pt-4
       input.btn.btn-success(type='submit', value='Search')
 </template>

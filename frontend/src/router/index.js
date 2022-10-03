@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from '../store'
-import Bookings from '../views/bookings-view.vue'
 import HomeView from '../views/home-view.vue'
 import Login from '../views/login-view.vue'
 import Register from '../views/register-view.vue'
@@ -12,11 +11,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/about-view.vue'),
     },
     {
       path: '/bungalows',
@@ -38,7 +32,7 @@ const router = createRouter({
       name: 'register',
       component: Register,
       beforeEnter(to, from, next) {
-        if (store.state.user) return next('/profile')
+        if (store.state.user) return next('/')
         return next()
       },
     },
@@ -47,19 +41,19 @@ const router = createRouter({
       name: 'login',
       component: Login,
       beforeEnter(to, from, next) {
-        if (store.state.user) return next('/profile')
+        if (store.state.user) return next('/')
         return next()
       },
     },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Bookings,
-      beforeEnter(to, from, next) {
-        if (!store.state.user) return next('/login')
-        return next()
-      },
-    },
+    // {
+    //   path: '/profile',
+    //   name: 'profile',
+    //   component: Bookings,
+    //   beforeEnter(to, from, next) {
+    //     if (!store.state.user) return next('/login')
+    //     return next()
+    //   },
+    // },
   ],
 })
 

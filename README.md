@@ -1,11 +1,15 @@
-# Coyotiv - School of Software Engineering
-  ## Express + MongoDB + Docker + Jest + Vue starter Template  
+# Bungaa
+Bungaa is a bungalow booking app. After the pandemic, bungalows became very popular in my local area. Bungaa provides users with easy access to lovely bungalows.
+
+Based on modern web technologies: Node.js, Express.js, Jest, MongoDB, Mongoose, Vue.js, Vuex, Google Cloud, Docker  
+
+Open app: [Bungaa](https://frontend-i7c5unry2q-ew.a.run.app/https://backend-i7c5unry2q-ew.a.run.app/)
 &nbsp;
 
 ---
 
 &nbsp; 
- 
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 &nbsp;  
@@ -13,12 +17,7 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/coyotiv/sose-express-mongo-docker-jest-vue)
 &nbsp;  
 
-Now you can directly work in your browser!  
-&nbsp;
-
 ## Getting started
-&nbsp;
-### NODE - EXPRESS - MONGODB - DOCKER - JEST - VUE
 &nbsp;
 
 Install dependencies in backend folder
@@ -183,11 +182,6 @@ To modify a *env variables*:
   ```   
 
   &nbsp;
-  
----  
-
- &nbsp;  
-_Now that we are ready, let's have some coding fun!_
 
 ---
 

@@ -10,6 +10,7 @@ export default {
 <template lang="pug">
 main
   h1 Rent a Bungalow for Your Next Escape
+  p test google cloud!
   SearchBar
 </template>
 

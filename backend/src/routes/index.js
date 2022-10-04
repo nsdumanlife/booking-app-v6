@@ -23,6 +23,15 @@ router.get('/create-bungalow', async (req, res, next) => {
     return next(e)
   }
 })
+
+router.get('/ping', async (req, res, next) => {
+  try {
+    return res.sendStatus(200)
+  } catch (e) {
+    return next(e)
+  }
+})
+
 router.get('/initialize', async (req, res, next) => {
   try {
     const faruk = new User({ username: 'Faruk', firstName: 'Faruk', lastName: 'Duman', age: 26, email: 'f@gmail.com' })

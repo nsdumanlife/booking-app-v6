@@ -5,14 +5,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Bungalows',
   components: { BungalowsListing },
-  // data() {
-  //   return {
-  //     bungalows: [],
-  //   }
-  // },
-  // async mounted() {
-  //   this.bungalows = await this.fetchBungalows()
-  // },
   methods: {
     ...mapActions(['fetchBungalows', 'fetchFilteredBungalows']),
   },

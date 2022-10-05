@@ -9,7 +9,7 @@ export default {
     ...mapActions(['fetchBungalows', 'fetchFilteredBungalows']),
   },
   computed: {
-    ...mapState(['checInDate', 'checkOutDate', 'guest', 'location', 'bungalows']),
+    ...mapState(['checkInDate', 'checkOutDate', 'guest', 'location', 'bungalows']),
   },
 }
 </script>

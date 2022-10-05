@@ -1,5 +1,5 @@
 <script>
-import SearchBar from '@/components/search-bar.vue';
+import SearchBar from '@/components/search-bar.vue'
 
 export default {
   name: 'HomeView',
@@ -10,7 +10,6 @@ export default {
 <template lang="pug">
 main
   h1 Rent a Bungalow for Your Next Escape
-  p test google cloud!
   SearchBar
 </template>
 

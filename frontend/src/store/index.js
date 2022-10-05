@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-catch */
 import axios from 'axios'
 import { createStore } from 'vuex'
-axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_URL
+axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL
 axios.defaults.withCredentials = true
 
 //TODO: after socket.io lecture, you need to add here
@@ -22,7 +22,7 @@ export default createStore({
     checkInDate: '',
     checkOutDate: '',
     guest: null,
-    location: 'Sapanca',
+    location: '',
     user: null,
     bungalows: [],
   },

@@ -52,4 +52,5 @@ describe('bookings endpoint', () => {
     expect(createdBooking.totalPrice).toBe(2500)
     expect(createdBooking.status).toBe('Upcoming')
   })
+  // test line...
 })

@@ -12,7 +12,7 @@ export default {
 .booking-list-item
   h3 {{ booking.bungalow.name }} - {{ booking.bungalow.location }}
   p {{ booking.checkInDate.substring(0,10) }} - {{ booking.checkOutDate.substring(0,10) }}
-  p {{ booking.bookingDays.length }} night{{ booking.bookingDays.length > 1 ? 's' : '' }} stand
+  p {{ booking.bookingDays.length }} night{{ booking.bookingDays.length > 1 ? 's' : '' }} stay
   p Total amount {{ booking.totalPrice }} TRY
 </template>
 

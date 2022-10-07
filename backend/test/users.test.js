@@ -10,7 +10,7 @@ describe('Users endpoints', () => {
       age: 1,
     }
 
-    const userResponse = await request(app).post('/users').send(userToCreate).expect(200)
+    const userResponse = await request(app).post('/api/users').send(userToCreate).expect(200)
     const createdUser = userResponse.body
 
     expect(createdUser).toMatchObject(userToCreate)

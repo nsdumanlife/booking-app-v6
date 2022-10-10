@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       backendError: null,
-      navOpen: true,
+      navOpen: false,
     }
   },
   computed: {
@@ -126,7 +126,7 @@ nav a:first-of-type {
 
   .nav-list {
     width: 100%;
-    margin-top: 4rem;
+    margin-top: 3rem;
     text-align: center;
     display: none;
   }

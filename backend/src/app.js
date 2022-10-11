@@ -9,6 +9,8 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
 const passport = require('passport')
+const helmet = require('helmet')
+
 const User = require('./models/user')
 
 const secret = process.env.SECRET || 'thisshouldbeabettersecret'
@@ -25,6 +27,8 @@ const bungalowsRouter = require('./routes/bungalows')
 const usersRouter = require('./routes/users')
 
 const app = express()
+
+app.use(helmet())
 
 app.use(
   cors({

@@ -36,6 +36,7 @@
     "dotenv": "^16.0.1",
     "express": "~4.16.1",
     "express-session": "^1.17.3",
+    "helmet": "^6.0.0",
     "http-errors": "~1.6.3",
     "mongoose": "^6.4.4",
     "mongoose-autopopulate": "^0.16.1",

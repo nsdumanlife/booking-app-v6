@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const helmet = require('helmet')
+const mongoSanitize = require('express-mongo-sanitize')
 
 const User = require('./models/user')
 
@@ -53,6 +54,9 @@ app.set('view engine', 'pug')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.use(mongoSanitize({ replaceWith: '_' }))
+
 app.use(cookieParser())
 app.use(
   session({

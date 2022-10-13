@@ -41,8 +41,13 @@ export default {
   methods: {
     ...mapActions(['fetchFilteredBungalows', 'setBungalows']),
     async submitFormAndUpdateBungalows() {
-      const filteredBungalows = await this.fetchFilteredBungalows(this.location)
-
+      const filteredBungalows = await this.fetchFilteredBungalows(
+        this.location,
+        this.checkInDate,
+        this.checkOutDate,
+        this.guest
+      )
+      // this.$router.query.push(this.location, this.checkInDate, this.checkOutDate, this.guest)
       this.$store.dispatch('setBungalows', filteredBungalows)
       this.$router.push('/bungalows')
     },
@@ -51,7 +56,7 @@ export default {
 </script>
 
 <template lang="pug">
-.search-bar
+.search-bar.container
   form.row(@submit.prevent='submitFormAndUpdateBungalows')
     .col
       label.form-label(for='location') Where to?
@@ -64,7 +69,7 @@ export default {
         input#checkOutDate.form-control(type='date', name='checkOutDate', v-model='checkOutDate')
     .col
       label.form-label(for='guestNumber') Guest:
-        input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest', min='2')
+        input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest', min='1')
     .col.pt-4
       input.btn.btn-success(type='submit', value='Search')
 </template>

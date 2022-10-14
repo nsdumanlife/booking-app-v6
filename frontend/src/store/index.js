@@ -74,14 +74,8 @@ export default createStore({
       const bungalowsRequest = await axios.get(`/api/bungalows/`)
       return bungalowsRequest.data
     },
-    async fetchFilteredBungalows(store, location, checkInDate, checkOutDate, guest) {
-      const filteredBungalowsRequest = await axios.post(
-        `/api/bungalows/filtered`,
-        location,
-        checkInDate,
-        checkOutDate,
-        guest
-      )
+    async fetchFilteredBungalows(store, query) {
+      const filteredBungalowsRequest = await axios.get(`/api/bungalows`, { params: query })
 
       return filteredBungalowsRequest.data
     },

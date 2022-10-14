@@ -1,5 +1,5 @@
 const express = require('express')
-// const { celebrate, Joi, errors, Segments } = require('celebrate')
+const { celebrate, Joi, errors, Segments } = require('celebrate')
 
 const router = express.Router()
 
@@ -8,38 +8,26 @@ const Bungalow = require('../models/bungalow')
 /* GET bungalows listing. */
 router.get(
   '/',
-  // celebrate({
-  //   [Segments.QUERY]: {
-  //     name: Joi.string(),
-  //     location: Joi.string(),
-  //   },
-  // }),
+  celebrate({
+    [Segments.QUERY]: {
+      name: Joi.string(),
+      location: Joi.string(),
+      guest: Joi.number(),
+      checkInDate: Joi.string(),
+      checkOutDate: Joi.string(),
+    },
+  }),
   async (req, res, next) => {
     try {
-      const bungalows = await Bungalow.find({})
+      const query = {}
 
-      if (!bungalows)
-        return res.render('error', {
-          error: { status: 404 },
-          message: `No bungalow found`,
-        })
+      if (req.query.name) query.name = { $regex: `${req.query.name}`, $options: 'i' }
 
-      if (req.query.name) {
-        const bungalow = await Bungalow.find({
-          name: { $regex: `${req.query.name}`, $options: 'i' },
-        })
+      if (req.query.location) query.location = { $regex: `${req.query.location}`, $options: 'i' }
 
-        return res.send(bungalow)
-      }
-      if (req.query.location) {
-        const bungalow = await Bungalow.find({
-          location: { $regex: `${req.query.location}`, $options: 'i' },
-        })
+      if (req.query.guest) query.capacity = { $gte: req.query.guest }
 
-        return res.send(bungalow)
-      }
-
-      return res.send(bungalows)
+      return res.send(await Bungalow.find(query))
     } catch (e) {
       return next(e)
     }
@@ -84,32 +72,6 @@ router.post('/', async (req, res, next) => {
     return res.send(bungalow)
   } catch (e) {
     return next(e)
-  }
-})
-
-router.get('/filtered', async (req, res, next) => {
-  try {
-    // const { location, checkInDate, checkOutDate, guest } = req.body
-    console.log('Req query:', req.query)
-
-    const query = []
-
-    if (req.body.guestNumber) {
-      query.push({
-        guest: { $gte: req.body.guestNumber },
-      })
-    }
-
-    // if (req.body.location) {
-    //   query.push({
-    //     location: { $regex: `${req.query.location}`, $options: 'i' },
-    //   })
-    // }
-
-    const filteredBungalows = await Bungalow.find({ guest: { $gte: 4 } })
-    res.send(filteredBungalows)
-  } catch (e) {
-    next(e)
   }
 })
 

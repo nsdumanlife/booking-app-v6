@@ -41,13 +41,15 @@ export default {
   methods: {
     ...mapActions(['fetchFilteredBungalows', 'setBungalows']),
     async submitFormAndUpdateBungalows() {
-      const filteredBungalows = await this.fetchFilteredBungalows(
-        this.location,
-        this.checkInDate,
-        this.checkOutDate,
-        this.guest
-      )
-      // this.$router.query.push(this.location, this.checkInDate, this.checkOutDate, this.guest)
+      const query = {}
+
+      if (this.location) query.location = this.location
+
+      if (this.guest) query.guest = this.guest
+
+      this.$router.push({ path: '/bungalows/', query: query })
+
+      const filteredBungalows = await this.fetchFilteredBungalows(query)
       this.$store.dispatch('setBungalows', filteredBungalows)
       this.$router.push('/bungalows')
     },

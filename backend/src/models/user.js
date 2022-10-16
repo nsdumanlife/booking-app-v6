@@ -45,11 +45,6 @@ class User {
       await bungalow.save()
 
       return newBooking
-
-      // TODO:
-      // do payment
-      // create invoice
-      // send confirmation email attached with invoice to user
     }
     throw new Error('Please select different date')
   }

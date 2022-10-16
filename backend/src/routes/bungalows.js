@@ -47,32 +47,57 @@ router.get('/:bungalowId', async (req, res, next) => {
 })
 
 /* POST/create new review. */
-router.post('/:bungalowId/reviews', async (req, res, next) => {
-  try {
-    const bungalow = await Bungalow.findById(req.params.bungalowId)
+router.post(
+  '/:bungalowId/reviews',
+  celebrate({
+    [Segments.QUERY]: {
+      bungalow: Joi.string(),
+      text: Joi.string(),
+      rate: Joi.number(),
+    },
+  }),
+  async (req, res, next) => {
+    try {
+      const bungalow = await Bungalow.findById(req.params.bungalowId)
 
-    if (!bungalow)
-      return res.render('error', {
-        error: { status: 404 },
-        message: `No bungalow found`,
-      })
+      if (!bungalow)
+        return res.render('error', {
+          error: { status: 404 },
+          message: `No bungalow found`,
+        })
 
-    const review = await req.user.review(bungalow, req.body.text, req.body.rate)
-    return res.send(review)
-    // return res.redirect(`/bungalows/${bungalow.id}`)
-  } catch (e) {
-    return next(e)
+      const review = await req.user.review(bungalow, req.body.text, req.body.rate)
+      return res.send(review)
+    } catch (e) {
+      return next(e)
+    }
   }
-})
+)
 /* POST/create new bungalow */
-router.post('/', async (req, res, next) => {
-  try {
-    const bungalow = await req.user.createBungalow(req.body.name, req.body.location, req.body.capacity, req.body.price)
+router.post(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      name: Joi.string(),
+      location: Joi.string(),
+      capacity: Joi.number(),
+      price: Joi.number(),
+    },
+  }),
+  async (req, res, next) => {
+    try {
+      const bungalow = await req.user.createBungalow(
+        req.body.name,
+        req.body.location,
+        req.body.capacity,
+        req.body.price
+      )
 
-    return res.send(bungalow)
-  } catch (e) {
-    return next(e)
+      return res.send(bungalow)
+    } catch (e) {
+      return next(e)
+    }
   }
-})
+)
 
 module.exports = router

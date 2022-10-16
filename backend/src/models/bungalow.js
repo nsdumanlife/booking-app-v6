@@ -30,7 +30,7 @@ const bungalowSchema = new mongoose.Schema(
         autopopulate: { maxDepth: 2 },
       },
     ],
-    bookedDates: [],
+    bookedDates: [Date],
     reviews: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -12,6 +12,7 @@ export default {
 <template lang="pug">
 main.bungalow-list
   SearchBar
-  router-link(:to='`/bungalows/${bungalow._id}`', v-for='bungalow in bungalows') 
+  router-link(v-if='bungalows.length', :to='`/bungalows/${bungalow._id}`', v-for='bungalow in bungalows') 
     BungalowCard(:bungalow='bungalow')
+  p(v-else) There is no such a bungalow.
 </template>

@@ -16,3 +16,11 @@ main.bungalow-list
     BungalowCard(:bungalow='bungalow')
   p(v-else) There is no such a bungalow.
 </template>
+
+<style lang="scss" scoped>
+p {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+</style>

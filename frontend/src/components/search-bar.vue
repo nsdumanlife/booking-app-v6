@@ -47,11 +47,15 @@ export default {
 
       if (this.guest) query.guest = this.guest
 
+      if (this.checkInDate) query.checkInDate = this.checkInDate
+
+      if (this.checkOutDate) query.checkOutDate = this.checkOutDate
+
       this.$router.push({ path: '/bungalows/', query: query })
 
       const filteredBungalows = await this.fetchFilteredBungalows(query)
       this.$store.dispatch('setBungalows', filteredBungalows)
-      this.$router.push('/bungalows')
+      // this.$router.push('/bungalows')
     },
   },
 }

@@ -27,6 +27,9 @@ router.get(
 
       if (req.query.guest) query.capacity = { $gte: req.query.guest }
 
+      if (req.query.checkInDate && req.query.checkOutDate)
+        query.bookedDates = { $not: { $gte: new Date(req.query.checkInDate), $lte: new Date(req.query.checkOutDate) } }
+
       return res.send(await Bungalow.find(query))
     } catch (e) {
       return next(e)

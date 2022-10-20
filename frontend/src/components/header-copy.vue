@@ -52,14 +52,13 @@ header
         alt='Bungaa Logo',
         width='70'
       )
-      //- span.green Bungaa
     //- SearchBar.search-container
     .search-container.green(@click='changeSearchBarVisible')
-      span.place {{ showLocation }}
-      span.checkInDate {{ showCheckInDate }}
+      .place {{ showLocation }}
+      .checkInDate {{ showCheckInDate }}
       //- span.checkOutDate {{ checkOutDate }}
-      span.guest {{ showGuestNumber }}
-      span.material-icons.icon.search-icon search
+      .guest {{ showGuestNumber }}
+      .material-icons.icon.search-icon search
       SearchDetail(v-show='isSearchBarVisible')
     .nav-list
       div(v-if='!user')
@@ -78,9 +77,12 @@ header
 nav {
   position: sticky;
   top: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); */
   /* grid-template-columns: auto 1fr auto; */
+  display: flex;
+  flex-basis: auto;
+  align-items: center;
   padding: 1.25rem 0;
 
   /* align-items: center;
@@ -89,17 +91,8 @@ nav {
   margin: 0.5rem; */
 }
 
-.logo {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 2.5rem;
-}
-
-.logo span {
-  display: block;
-  padding: 0 1rem;
-  transition: 0.4s;
+nav > * {
+  flex-grow: 1;
 }
 
 header a.router-link-exact-active {

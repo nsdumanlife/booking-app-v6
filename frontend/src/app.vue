@@ -19,9 +19,9 @@ export default {
 </script>
 
 <template lang="pug">
-#app
+div
   .header
-    HeaderCmp
+    HeaderCmpCopy
   RouterView 
 </template>
 

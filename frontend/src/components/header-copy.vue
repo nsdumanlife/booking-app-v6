@@ -2,12 +2,11 @@
 // eslint-disable-next-line no-unused-vars
 import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'vuex'
-import SearchDetail from '@/components/search-detail.vue'
 import SearchBar from '@/components/search-bar.vue'
 
 export default {
   name: 'HeaderCmpCopy',
-  components: { SearchDetail, SearchBar },
+  components: { SearchBar },
   data() {
     return {
       backendError: null,
@@ -53,13 +52,13 @@ header
         width='70'
       )
     //- SearchBar.search-container
-    .search-container.green(@click='changeSearchBarVisible')
+    .green.search-container(@click='changeSearchBarVisible')
       .place {{ showLocation }}
       .checkInDate {{ showCheckInDate }}
       //- span.checkOutDate {{ checkOutDate }}
       .guest {{ showGuestNumber }}
       .material-icons.icon.search-icon search
-      SearchDetail(v-show='isSearchBarVisible')
+      SearchBar(v-show='isSearchBarVisible')
     .nav-list
       div(v-if='!user')
         RouterLink(to='/login') Login
@@ -77,22 +76,15 @@ header
 nav {
   position: sticky;
   top: 0;
-  /* display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)); */
-  /* grid-template-columns: auto 1fr auto; */
   display: flex;
-  flex-basis: auto;
   align-items: center;
   padding: 1.25rem 0;
-
-  /* align-items: center;
-  justify-content: space-between; */
-  /* gap: 1rem;
-  margin: 0.5rem; */
+  justify-content: space-between;
 }
 
 nav > * {
   flex-grow: 1;
+  flex-shrink: 0;
 }
 
 header a.router-link-exact-active {
@@ -121,16 +113,15 @@ nav a:first-of-type {
 
 .search-container {
   cursor: pointer;
-  /* display: grid;
-  grid-template-columns: 25% 25% 25% 25%; */
   border: 2px solid rgb(91, 190, 134);
   border-radius: 9999px;
   gap: 0.5rem;
 
   display: flex;
   align-items: center;
+  justify-content: space-around;
   padding: 0.5rem 0;
-  padding-left: 0.5rem;
+  padding-left: 2rem;
 }
 
 .search-icon {

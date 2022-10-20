@@ -20,6 +20,7 @@ export default {
           checkOutDate: this.checkOutDate,
           bungalowId: this.bungalow._id,
         })
+        this.$router.push('/bookings')
       } catch (e) {
         this.error = e.response.data.msg
       }

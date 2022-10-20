@@ -4,17 +4,14 @@ import { createStore } from 'vuex'
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL
 axios.defaults.withCredentials = true
 
-//TODO: after socket.io lecture, you need to add here
-// const socket = io(process.env.VUE_APP_BASE_URL)
-
 const Mutations = {
   SET_CHECKINDATE: 'SET_CHECKINDATE',
   SET_CHECKOUTDATE: 'SET_CHECKOUTDATE',
   SET_GUEST: 'SET_GUEST',
   SET_LOCATION: 'SET_LOCATION',
   SET_BUNGALOWS: 'SET_BUNGALOWS',
-
   SET_USER: 'SET_USER',
+  SET_ISSEARCHBARVISIBLE: 'SET_ISSEARCHBARVISIBLE',
 }
 
 export default createStore({
@@ -25,6 +22,7 @@ export default createStore({
     location: '',
     user: null,
     bungalows: [],
+    isSearchBarVisible: false,
   },
   mutations: {
     [Mutations.SET_CHECKINDATE](state, checkInDate) {
@@ -45,6 +43,9 @@ export default createStore({
     [Mutations.SET_BUNGALOWS](state, bungalows) {
       state.bungalows = bungalows
     },
+    [Mutations.SET_ISSEARCHBARVISIBLE](state, isSearchBarVisible) {
+      state.isSearchBarVisible = isSearchBarVisible
+    },
   },
   actions: {
     setCheckInDate({ commit }, checkInDate) {
@@ -62,6 +63,9 @@ export default createStore({
     setBungalows({ commit }, bungalows) {
       commit(Mutations.SET_BUNGALOWS, bungalows)
     },
+    setIsSearchBarVisible({ commit }, isSearchBarVisible) {
+      commit(Mutations.SET_ISSEARCHBARVISIBLE, isSearchBarVisible)
+    },
     async fetchBungalow(store, id) {
       const bungalowRequest = await axios.get(`/api/bungalows/${id}`)
       return bungalowRequest.data
@@ -70,8 +74,8 @@ export default createStore({
       const bungalowsRequest = await axios.get(`/api/bungalows/`)
       return bungalowsRequest.data
     },
-    async fetchFilteredBungalows(store, location) {
-      const filteredBungalowsRequest = await axios.get(`/api/bungalows?location=${location}`)
+    async fetchFilteredBungalows(store, query) {
+      const filteredBungalowsRequest = await axios.get(`/api/bungalows`, { params: query })
 
       return filteredBungalowsRequest.data
     },

@@ -2,9 +2,23 @@
 const request = require('supertest')
 const app = require('../src/app')
 
+const agent = request.agent(app)
+
 describe('bookings endpoint', () => {
+  let authenticatedSession
+
+  beforeEach(async () => {
+    const userToLogin = {
+      email: 'test@test.com',
+      password: 'Test',
+    }
+
+    authenticatedSession = await agent.post('/api/account/session').send(userToLogin)
+
+    return authenticatedSession
+  })
   it('get bookings list', async () => {
-    const bookingsRequest = await request(app).get('/api/bookings').expect(200)
+    const bookingsRequest = await agent.get('/api/bookings').expect(200)
     const bookings = bookingsRequest.body
 
     const bookingsExist = bookings.length > 0
@@ -30,20 +44,20 @@ describe('bookings endpoint', () => {
       age: 1,
     }
 
-    const userRequest = await request(app).post('/api/users').send(userToCreate).expect(200)
+    const userRequest = await agent.post('/api/users').send(userToCreate).expect(200)
     const createdUser = userRequest.body
 
-    const bungalowRequest = await request(app).post('/api/bungalows').send(bungalowToCreate).expect(200)
+    const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
 
-    const bookingRequest = await request(app)
+    const bookingRequest = await agent
       .post(`/api/bookings`)
       .send({ guest: createdUser, bungalowId: createdBungalow._id, checkInDate, checkOutDate })
     // booking does not include createdUser because it takes loggedInUser in user.book
     const createdBooking = bookingRequest.body
 
     // // new booking for unavailable dates
-    // const unvalidBookingRequest = await request(app)
+    // const unvalidBookingRequest = await agent
     //   .post(`/bookings`)
     //   .send({ guest: createdUser, bungalowId: createdBungalow._id, checkInDate, checkOutDate })
     // const createdUnvalidBooking = unvalidBookingRequest.body

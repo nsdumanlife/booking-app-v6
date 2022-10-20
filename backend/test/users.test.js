@@ -6,7 +6,7 @@ describe('Users endpoints', () => {
     const userToCreate = {
       firstName: 'ege',
       lastName: 'duman',
-      email: 'ege@duman.com',
+      email: `ege${Date.now()}@duman.com`,
       age: 1,
     }
 

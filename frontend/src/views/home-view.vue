@@ -1,9 +1,14 @@
 <script>
 import SearchBar from '@/components/search-bar.vue'
+import SearchDetail from '@/components/search-detail.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'HomeView',
-  components: { SearchBar },
+  components: { SearchBar, SearchDetail },
+  computed: {
+    ...mapState(['isSearchBarVisible']),
+  },
 }
 </script>
 
@@ -11,6 +16,7 @@ export default {
 main
   h1 Rent a Bungalow for Your Next Escape
   SearchBar
+  SearchDetail(v-show='isSearchBarVisible')
 </template>
 
 <style scoped>

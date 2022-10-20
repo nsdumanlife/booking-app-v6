@@ -3,12 +3,12 @@
 import { RouterView } from 'vue-router'
 
 import HeaderCmp from './components/header.vue'
-
+import HeaderCmpCopy from './components/header-copy.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
-  components: { HeaderCmp },
+  components: { HeaderCmp, HeaderCmpCopy },
   methods: {
     ...mapActions(['fetchSession']),
   },

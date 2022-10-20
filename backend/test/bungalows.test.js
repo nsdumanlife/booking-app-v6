@@ -2,9 +2,24 @@
 const request = require('supertest')
 const app = require('../src/app')
 
+const agent = request.agent(app)
+
 describe('Bungalows endpoints', () => {
+  let authenticatedSession
+
+  beforeEach(async () => {
+    const userToLogin = {
+      email: 'test@test.com',
+      password: 'Test',
+    }
+
+    authenticatedSession = await agent.post('/api/account/session').send(userToLogin)
+
+    return authenticatedSession
+  })
+
   it('get request to /bungalows should list bungalows', async () => {
-    const bungalowList = (await request(app).get('/api/bungalows')).body
+    const bungalowList = (await agent.get('/api/bungalows')).body
 
     const bungalowsExist = bungalowList.length > 0
 
@@ -20,10 +35,10 @@ describe('Bungalows endpoints', () => {
       price: 2000,
     }
 
-    const bungalowRequest = await request(app).post('/api/bungalows').send(bungalowToCreate).expect(200)
+    const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
     console.log(createdBungalow)
-    const bungalow = (await request(app).get(`/api/bungalows?name=${createdBungalow.name}`)).body
+    const bungalow = (await agent.get(`/api/bungalows?name=${createdBungalow.name}`)).body
 
     expect(bungalow).toMatchObject(bungalowToCreate)
   })
@@ -37,10 +52,10 @@ describe('Bungalows endpoints', () => {
       price: 1250,
     }
 
-    const bungalowRequest = await request(app).post('/api/bungalows').send(bungalowToCreate).expect(200)
+    const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
 
-    const response = await request(app).get(`/api/bungalows/${createdBungalow._id}`).expect(200)
+    const response = await agent.get(`/api/bungalows/${createdBungalow._id}`).expect(200)
 
     expect(response.body).toMatchObject(bungalowToCreate)
   })
@@ -53,7 +68,7 @@ describe('Bungalows endpoints', () => {
       price: 1250,
     }
 
-    const bungalowRequest = await request(app).post('/api/bungalows').send(bungalowToCreate).expect(200)
+    const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
 
     expect(createdBungalow).toMatchObject(bungalowToCreate)
@@ -76,10 +91,10 @@ describe('Bungalows endpoints', () => {
       rate: 3,
     }
 
-    const bungalowRequest = await request(app).post('/api/bungalows').send(bungalowToCreate).expect(200)
+    const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
 
-    const reviewRequest = await request(app).post(`/api/bungalows/${createdBungalow._id}/reviews`).send(reviewToCreate)
+    const reviewRequest = await agent.post(`/api/bungalows/${createdBungalow._id}/reviews`).send(reviewToCreate)
     const createdReview = reviewRequest.body
 
     expect(createdReview).toMatchObject(reviewToCreate)

@@ -2,9 +2,12 @@
 // eslint-disable-next-line no-unused-vars
 import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'vuex'
+import SearchDetail from '@/components/search-detail.vue'
+import SearchBar from '@/components/search-bar.vue'
 
 export default {
   name: 'HeaderCmpCopy',
+  components: { SearchDetail, SearchBar },
   data() {
     return {
       backendError: null,
@@ -18,8 +21,12 @@ export default {
       return `${this.guest} guests`
     },
     showLocation() {
-      if (!this.location) return 'Select location'
+      if (!this.location) return 'Anywhere'
       return `${this.location}`
+    },
+    showCheckInDate() {
+      if (!this.checkInDate) return 'Anytime'
+      return `${this.checkInDate.slice(-5)} / ${this.checkOutDate.slice(-5)}`
     },
   },
   methods: {
@@ -41,17 +48,19 @@ header
   nav
     RouterLink.logo(to='/')
       img.d-inline-block.align-text-top.logo-icon(
-        src='./icons/hut-svgrepo-com.svg',
-        alt='Bungaa',
-        width='30',
-        height='24'
+        src='./icons/logo-monochrome-black.svg',
+        alt='Bungaa Logo',
+        width='70'
       )
-      span.green Bungaa
+      //- span.green Bungaa
+    //- SearchBar.search-container
     .search-container.green(@click='changeSearchBarVisible')
-      .place {{ showLocation }}
-      .checkInDate {{ checkInDate }}
-      .checkOutDate {{ checkOutDate }}
-      .guest {{ showGuestNumber }}
+      span.place {{ showLocation }}
+      span.checkInDate {{ showCheckInDate }}
+      //- span.checkOutDate {{ checkOutDate }}
+      span.guest {{ showGuestNumber }}
+      span.material-icons.icon.search-icon search
+      SearchDetail(v-show='isSearchBarVisible')
     .nav-list
       div(v-if='!user')
         RouterLink(to='/login') Login
@@ -67,16 +76,24 @@ header
 
 <style scoped>
 nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin: 0.5rem;
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* grid-template-columns: auto 1fr auto; */
+  padding: 1.25rem 0;
+
+  /* align-items: center;
+  justify-content: space-between; */
+  /* gap: 1rem;
+  margin: 0.5rem; */
 }
 
 .logo {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  height: 2.5rem;
 }
 
 .logo span {
@@ -93,6 +110,12 @@ header a.router-link-exact-active:hover {
   background-color: transparent;
 }
 
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 nav a {
   display: inline-block;
   padding: 0 1rem;
@@ -107,9 +130,20 @@ nav a:first-of-type {
   cursor: pointer;
   /* display: grid;
   grid-template-columns: 25% 25% 25% 25%; */
-  border: 1px solid rgb(88, 249, 158);
-  border-radius: 0.3rem;
-  gap: 5rem;
+  border: 2px solid rgb(91, 190, 134);
+  border-radius: 9999px;
+  gap: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  padding-left: 0.5rem;
+}
+
+.search-icon {
+  height: 2rem;
+  padding: 0.25rem 0;
+  margin: auto;
 }
 
 .menu {
@@ -121,6 +155,18 @@ nav a:first-of-type {
   height: 3px;
   background-color: var(--color-text);
   margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0 2.5rem;
+  }
+  .search-container {
+    border: none;
+  }
+  .search-icon {
+    display: none;
+  }
 }
 
 @media all and (max-width: 480px) {

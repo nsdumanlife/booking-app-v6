@@ -22,7 +22,6 @@ export default {
 #app
   .header
     HeaderCmp
-    HeaderCmpCopy
   RouterView 
 </template>
 

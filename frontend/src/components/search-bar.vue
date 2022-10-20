@@ -55,7 +55,6 @@ export default {
 
       const filteredBungalows = await this.fetchFilteredBungalows(query)
       this.$store.dispatch('setBungalows', filteredBungalows)
-      // this.$router.push('/bungalows')
     },
   },
 }
@@ -81,10 +80,10 @@ export default {
 </template>
 
 <style scoped>
-.search-bar {
+/* .search-bar {
   width: 80vw;
   border: 1px solid rgb(88, 249, 158);
   border-radius: 0.3rem;
   padding: 1rem;
-}
+} */
 </style>

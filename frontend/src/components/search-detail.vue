@@ -42,11 +42,21 @@ export default {
   methods: {
     ...mapActions(['fetchFilteredBungalows', 'setBungalows', 'setIsSearchBarVisible']),
     async submitFormAndUpdateBungalows() {
-      const filteredBungalows = await this.fetchFilteredBungalows(this.location)
+      const query = {}
 
-      this.closeSearchDetail()
+      if (this.location) query.location = this.location
+
+      if (this.guest) query.guest = this.guest
+
+      if (this.checkInDate) query.checkInDate = this.checkInDate
+
+      if (this.checkOutDate) query.checkOutDate = this.checkOutDate
+
+      this.$router.push({ path: '/bungalows/', query: query })
+
+      const filteredBungalows = await this.fetchFilteredBungalows(query)
       this.$store.dispatch('setBungalows', filteredBungalows)
-      this.$router.push('/bungalows')
+      this.$store.dispatch('setIsSearchBarVisible', false)
     },
     closeSearchDetail() {
       this.$store.dispatch('setIsSearchBarVisible', false)
@@ -56,11 +66,11 @@ export default {
 </script>
 
 <template lang="pug">
-section.container
+section
   .header
     h3 Edit your search
     span.material-icons.icon(@click='closeSearchDetail') close
-  form.options.col(@submit.prevent='submitFormAndUpdateBungalows')
+  form.search-form.container(@submit.prevent='submitFormAndUpdateBungalows')
     .location.row(@click='selectLocation') 
       label.form-label(for='location') Where to?
         input#location.form-control(type='text', name='location', placeholder='Enter location', v-model='location')
@@ -79,7 +89,7 @@ section.container
           v-model='guest',
           min='1'
         )
-    .searchBtn.col.mt-3
+    .searchBtn.mt-3
       input.btn.btn-success(type='submit', value='Search')
 </template>
 
@@ -88,29 +98,36 @@ section {
   z-index: 1;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  background-color: var(--color-background);
+  left: -35vw;
+  width: 90vw;
+  background-color: black;
   padding: 1.8rem 2.2rem;
+  height: 100vh;
 
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
+
+    .icon {
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
   }
 
-  .icon {
-    font-size: 1.8rem;
-    cursor: pointer;
-  }
-
-  .options {
+  .search-form {
     display: flex;
+
+    min-width: 18em;
     flex-direction: column;
     gap: 0.8rem;
     overflow: hidden;
     margin-bottom: 3.6rem;
+
+    input {
+      max-width: 18em;
+    }
   }
 }
 </style>

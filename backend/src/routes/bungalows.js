@@ -93,7 +93,8 @@ router.post(
         req.body.name,
         req.body.location,
         req.body.capacity,
-        req.body.price
+        req.body.price,
+        req.body.images
       )
 
       return res.send(bungalow)

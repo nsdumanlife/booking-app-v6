@@ -76,9 +76,9 @@ class User {
     // send email to user
   }
 
-  async createBungalow(name, location, capacity, price) {
+  async createBungalow(name, location, capacity, price, images) {
     // check services, maybe create addService method at bungalow model?
-    const bungalow = await Bungalow.create({ name, location, capacity, price, owner: this })
+    const bungalow = await Bungalow.create({ name, location, capacity, price, images, owner: this })
 
     this.ownedBungalows.push(bungalow)
 

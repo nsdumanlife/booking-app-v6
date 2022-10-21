@@ -10,10 +10,12 @@ export default {
   data() {
     return {
       backendError: null,
+      isSearchContainerVisible: false,
+      isSearchBarVisible: false,
     }
   },
   computed: {
-    ...mapState(['user', 'location', 'checkInDate', 'checkOutDate', 'guest', 'isSearchBarVisible']),
+    ...mapState(['user', 'location', 'checkInDate', 'checkOutDate', 'guest']),
     showGuestNumber() {
       if (!this.guest) return 'Add guest'
       if (this.guest === 1) return '1 guest'
@@ -34,9 +36,16 @@ export default {
       await this.logout()
     },
     changeSearchBarVisible() {
-      const searchBarVisible = !this.IsSearchBarVisible
-
-      this.$store.dispatch('setIsSearchBarVisible', searchBarVisible)
+      this.isSearchBarVisible = !this.isSearchBarVisible
+    },
+  },
+  watch: {
+    $route() {
+      if (this.$route.path !== '/') {
+        this.isSearchContainerVisible = true
+      } else {
+        this.isSearchContainerVisible = false
+      }
     },
   },
 }
@@ -52,10 +61,9 @@ header
         width='70'
       )
     //- SearchBar.search-container
-    .green.search-container(@click='changeSearchBarVisible')
+    .green.search-container(@click='changeSearchBarVisible', v-show='isSearchContainerVisible')
       .place {{ showLocation }}
       .checkInDate {{ showCheckInDate }}
-      //- span.checkOutDate {{ checkOutDate }}
       .guest {{ showGuestNumber }}
       .material-icons.icon.search-icon search
       SearchBar(v-show='isSearchBarVisible')

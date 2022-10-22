@@ -10,12 +10,10 @@ export default {
   data() {
     return {
       backendError: null,
-      isSearchContainerVisible: false,
-      isSearchBarVisible: false,
     }
   },
   computed: {
-    ...mapState(['user', 'location', 'checkInDate', 'checkOutDate', 'guest']),
+    ...mapState(['user', 'location', 'checkInDate', 'checkOutDate', 'guest', 'isSearchBarVisible']),
     showGuestNumber() {
       if (!this.guest) return 'Add guest'
       if (this.guest === 1) return '1 guest'
@@ -35,16 +33,17 @@ export default {
     async doLogout() {
       await this.logout()
     },
-    changeSearchBarVisible() {
-      this.isSearchBarVisible = !this.isSearchBarVisible
+    changeIsSearchBarVisible() {
+      const isSearchBarVisible = !this.isSearchBarVisible
+      this.$store.dispatch('setIsSearchBarVisible', isSearchBarVisible)
     },
   },
   watch: {
     $route() {
-      if (this.$route.path !== '/') {
-        this.isSearchContainerVisible = true
+      if (this.$route.path === '/') {
+        this.setIsSearchBarVisible(true)
       } else {
-        this.isSearchContainerVisible = false
+        this.setIsSearchBarVisible(false)
       }
     },
   },
@@ -60,13 +59,11 @@ header
         alt='Bungaa Logo',
         width='70'
       )
-    //- SearchBar.search-container
-    .green.search-container(@click='changeSearchBarVisible', v-show='isSearchContainerVisible')
+    .green.search-container(@click='changeIsSearchBarVisible', v-show='!this.isSearchBarVisible')
       .place {{ showLocation }}
       .checkInDate {{ showCheckInDate }}
       .guest {{ showGuestNumber }}
       .material-icons.icon.search-icon search
-      SearchBar(v-show='isSearchBarVisible')
     .nav-list
       div(v-if='!user')
         RouterLink(to='/login') Login

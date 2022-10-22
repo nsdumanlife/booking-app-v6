@@ -32,7 +32,7 @@ export default {
       p(v-else) No review yet
       .info-price
         p.price {{ bungalow.price }} TRY / night
-        p.total(v-show='checkInDate&&checkOutDate') {{ totalPrice }} total
+        p.total(v-show='checkInDate&&checkOutDate') {{ totalPrice }} TRY total
 </template>
 
 <style lang="scss" scoped>
@@ -90,6 +90,7 @@ export default {
         display: flex;
         font-size: 0.9rem;
         align-items: center;
+        margin: auto 0;
 
         .star {
           margin-right: 0.25rem;
@@ -98,10 +99,11 @@ export default {
       }
       .info-price {
         .price {
-          padding-bottom: 0.5rem;
+          // padding-bottom: 0.5rem;
           font-size: 1.125rem;
           line-height: 1.75rem;
           font-weight: 600;
+          margin: auto 0;
         }
         .total {
           justify-content: flex-end;

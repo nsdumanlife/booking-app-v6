@@ -22,7 +22,7 @@ export default createStore({
     location: '',
     user: null,
     bungalows: [],
-    isSearchBarVisible: false,
+    isSearchBarVisible: true,
   },
   mutations: {
     [Mutations.SET_CHECKINDATE](state, checkInDate) {

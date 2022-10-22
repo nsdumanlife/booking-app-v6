@@ -85,6 +85,7 @@ nav {
   align-items: center;
   padding: 1.25rem 0;
   justify-content: space-between;
+  border-bottom: 2px solid var(--color-border);
 }
 
 nav > * {

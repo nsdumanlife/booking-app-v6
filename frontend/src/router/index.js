@@ -21,6 +21,12 @@ const router = createRouter({
       path: '/bungalows/:bungalowId',
       name: 'bungalow',
       component: () => import('../views/bungalow-detail-view.vue'),
+      // children: [{ path: 'image/:imageId', name: 'image', component: () => import('../views/image-view.vue') }],
+    },
+    {
+      path: '/bungalows/:bungalowId/image/:imageId',
+      name: 'image',
+      component: () => import('../components/image.vue'),
     },
     {
       path: '/bookings',
@@ -45,15 +51,6 @@ const router = createRouter({
         return next()
       },
     },
-    // {
-    //   path: '/profile',
-    //   name: 'profile',
-    //   component: Bookings,
-    //   beforeEnter(to, from, next) {
-    //     if (!store.state.user) return next('/login')
-    //     return next()
-    //   },
-    // },
   ],
 })
 

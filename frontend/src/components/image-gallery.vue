@@ -18,8 +18,8 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   grid-gap: 1.2rem;
   max-width: 80rem;
-  margin: 5rem auto;
-  padding: 0 5rem;
+  margin: 1rem auto;
+  padding: 0 3rem;
 
   .img {
     flex-basis: 13rem;

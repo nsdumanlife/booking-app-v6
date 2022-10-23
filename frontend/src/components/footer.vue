@@ -37,6 +37,9 @@ export default {
   row-gap: 2.5rem;
   padding: 3.5rem 8rem;
   background: var(--color-background-mute);
+  position: sticky;
+  top: 100vh;
+  margin-top: 2rem;
 }
 @media (max-width: 768px) {
   .footer {

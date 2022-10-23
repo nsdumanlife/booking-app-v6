@@ -1,13 +1,11 @@
 <script>
 import NewBookingCard from '@/components/new-booking-card.vue'
 import Review from '@/components/review.vue'
-import ImageCmp from '@/components/image.vue'
-import ImageGallery from '@/components/image-gallery.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'Bungalow',
-  components: { NewBookingCard, Review, ImageCmp, ImageGallery },
+  components: { NewBookingCard, Review },
   data() {
     return {
       bungalow: {},
@@ -39,19 +37,20 @@ main.bungalow
       | {{ bungalow.rating }} - {{ showReview }}
     p(v-else) No review yet
     p.location {{ bungalow.location }}
-  ImageGallery(:bungalow='bungalow')
-  //- ImageCmp
-  .bungalow-info
-    h4 Services
-    p It is empty for now, i haven't work enums in mongoose yet :(
-    .services(v-for='service in bungalow.services')
-      p Service Name Here
-    NewBookingCard(:bungalow='bungalow')
-    h3 Reviews of Bungalow {{ bungalow.name }}
-    .rating(v-if='!bungalow.rating')
-      | No reviews yet!
-    .rating(v-else)
-      Review(:bungalow='bungalow')
+
+  .image-gallery
+    .img(v-for='image in bungalow.images')
+      img(:src='image.src', :alt='image.alt')
+  h4 Services
+  p It is empty for now, i haven't work enums in mongoose yet :(
+  .services(v-for='service in bungalow.services')
+    p Service Name Here
+  NewBookingCard(:bungalow='bungalow')
+  h3 Reviews of Bungalow {{ bungalow.name }}
+  .rating(v-if='!bungalow.rating')
+    | No reviews yet!
+  .rating(v-else)
+    Review(:bungalow='bungalow')
 </template>
 
 <style lang="scss" scoped>
@@ -71,7 +70,29 @@ main.bungalow
       }
     }
   }
-  .bungalow-info {
+  .image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.625rem;
+
+    .img {
+      flex-basis: 13rem;
+      img {
+        object-fit: cover;
+        width: 13rem;
+        height: 16rem;
+        vertical-align: middle;
+        border-radius: 0.5rem;
+      }
+    }
+    .img:nth-child(1) {
+      flex-basis: 39rem;
+      img:nth-child(1) {
+        width: 39rem;
+        height: 32rem;
+      }
+    }
   }
 }
 </style>

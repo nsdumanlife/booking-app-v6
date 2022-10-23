@@ -22,7 +22,7 @@ export default createStore({
     location: '',
     user: null,
     bungalows: [],
-    isSearchBarVisible: false,
+    isSearchBarVisible: true,
   },
   mutations: {
     [Mutations.SET_CHECKINDATE](state, checkInDate) {
@@ -69,6 +69,10 @@ export default createStore({
     async fetchBungalow(store, id) {
       const bungalowRequest = await axios.get(`/api/bungalows/${id}`)
       return bungalowRequest.data
+    },
+    async fetchBungalowImage(store, { bungalowId, imageId }) {
+      const imageRequest = await axios.get(`/api/bungalows/${bungalowId}/image/${imageId}`)
+      return imageRequest.data
     },
     async fetchBungalows() {
       const bungalowsRequest = await axios.get(`/api/bungalows/`)

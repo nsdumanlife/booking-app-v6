@@ -1,10 +1,11 @@
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'SearchBar',
   components: {},
   computed: {
+    ...mapState(['isSearchBarVisible']),
     location: {
       get() {
         return this.$store.state.location
@@ -37,9 +38,17 @@ export default {
         this.$store.dispatch('setGuest', value)
       },
     },
+    // isSearchBarVisible: {
+    //   get() {
+    //     return this.$store.state.isSearchBarVisible
+    //   },
+    //   set(value) {
+    //     this.$store.dispatch('setIsSearchBarVisible', value)
+    //   },
+    // },
   },
   methods: {
-    ...mapActions(['fetchFilteredBungalows', 'setBungalows']),
+    ...mapActions(['fetchFilteredBungalows', 'setBungalows', 'setIsSearchBarVisible']),
     async submitFormAndUpdateBungalows() {
       const query = {}
 
@@ -55,27 +64,29 @@ export default {
 
       const filteredBungalows = await this.fetchFilteredBungalows(query)
       this.$store.dispatch('setBungalows', filteredBungalows)
+
+      this.setIsSearchBarVisible(false)
     },
   },
 }
 </script>
 
 <template lang="pug">
-.search-bar.container
+.search-bar.container(v-show='isSearchBarVisible')
   form.row(@submit.prevent='submitFormAndUpdateBungalows')
-    .col
+    .col-md-3
       label.form-label(for='location') Where to?
         input#location.form-control(type='text', name='location', placeholder='Sapanca', v-model='location')
-    .col
+    .col-md-3
       label.form-label(for='checkInDate') Check-in date
         input#checkInDate.form-control(type='date', name='checkInDate', v-model='checkInDate')
-    .col
+    .col-md-3
       label.form-label(for='checkOutDate') Check-out date
         input#checkOutDate.form-control(type='date', name='checkOutDate', v-model='checkOutDate')
-    .col
+    .col-md-2
       label.form-label(for='guestNumber') Guest:
         input#guestNumber.form-control(type='number', name='guestNumber', v-model='guest', min='1')
-    .col.pt-4
+    .col-md-1.pt-4
       input.btn.btn-success(type='submit', value='Search')
 </template>
 

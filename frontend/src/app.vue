@@ -3,12 +3,12 @@
 import { RouterView } from 'vue-router'
 
 import HeaderCmp from './components/header.vue'
-import HeaderCmpCopy from './components/header-copy.vue'
+import FooterCmp from './components/footer.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
-  components: { HeaderCmp, HeaderCmpCopy },
+  components: { HeaderCmp, FooterCmp },
   methods: {
     ...mapActions(['fetchSession']),
   },
@@ -19,10 +19,11 @@ export default {
 </script>
 
 <template lang="pug">
-#app
+div
   .header
     HeaderCmp
   RouterView 
+  FooterCmp
 </template>
 
 <style scoped></style>

@@ -2,22 +2,49 @@
 // eslint-disable-next-line no-unused-vars
 import { RouterLink } from 'vue-router'
 import { mapActions, mapState } from 'vuex'
+import SearchBar from '@/components/search-bar.vue'
 
 export default {
   name: 'HeaderCmp',
+  components: { SearchBar },
   data() {
     return {
       backendError: null,
-      navOpen: false,
     }
   },
   computed: {
-    ...mapState(['user']),
+    ...mapState(['user', 'location', 'checkInDate', 'checkOutDate', 'guest', 'isSearchBarVisible']),
+    showGuestNumber() {
+      if (!this.guest) return 'Add guest'
+      if (this.guest === 1) return '1 guest'
+      return `${this.guest} guests`
+    },
+    showLocation() {
+      if (!this.location) return 'Anywhere'
+      return `${this.location}`
+    },
+    showCheckInDate() {
+      if (!this.checkInDate) return 'Anytime'
+      return `${this.checkInDate.slice(-5)} / ${this.checkOutDate.slice(-5)}`
+    },
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'setIsSearchBarVisible']),
     async doLogout() {
       await this.logout()
+    },
+    changeIsSearchBarVisible() {
+      const isSearchBarVisible = !this.isSearchBarVisible
+      this.$store.dispatch('setIsSearchBarVisible', isSearchBarVisible)
+    },
+  },
+  watch: {
+    $route() {
+      if (this.$route.path === '/') {
+        this.setIsSearchBarVisible(true)
+      } else {
+        this.setIsSearchBarVisible(false)
+      }
     },
   },
 }
@@ -28,20 +55,23 @@ header
   nav
     RouterLink.logo(to='/')
       img.d-inline-block.align-text-top.logo-icon(
-        src='./icons/hut-svgrepo-com.svg',
-        alt='Bungaa',
-        width='30',
-        height='24'
+        src='./icons/logo-monochrome-black.svg',
+        alt='Bungaa Logo',
+        width='70'
       )
-      span.green Bungaa
-    .nav-list(:class='{ active: navOpen }')
+    .green.search-container(@click='changeIsSearchBarVisible', v-show='!this.isSearchBarVisible')
+      .place {{ showLocation }}
+      .checkInDate {{ showCheckInDate }}
+      .guest {{ showGuestNumber }}
+      .material-icons.icon.search-icon search
+    .nav-list
       div(v-if='!user')
         RouterLink(to='/login') Login
         RouterLink(to='/register') Register
       div(v-else)
         RouterLink(to='/bookings') Bookings
         a(@click='doLogout') Logout
-    .hamburger-menu(@click='navOpen = !navOpen')
+    .menu
       .menu-line
       .menu-line
       .menu-line
@@ -49,22 +79,18 @@ header
 
 <style scoped>
 nav {
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
+  padding: 1.25rem 0;
   justify-content: space-between;
-  gap: 1rem;
-  margin: 0.5rem;
+  border-bottom: 2px solid var(--color-border);
 }
 
-.logo {
-  display: flex;
-  justify-content: center;
-}
-
-.logo span {
-  display: block;
-  padding: 0 1rem;
-  transition: 0.4s;
+nav > * {
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 header a.router-link-exact-active {
@@ -73,6 +99,12 @@ header a.router-link-exact-active {
 
 header a.router-link-exact-active:hover {
   background-color: transparent;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 nav a {
@@ -85,7 +117,26 @@ nav a:first-of-type {
   border: 0;
 }
 
-.hamburger-menu {
+.search-container {
+  cursor: pointer;
+  border: 2px solid rgb(91, 190, 134);
+  border-radius: 9999px;
+  gap: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem 0;
+  padding-left: 2rem;
+}
+
+.search-icon {
+  height: 2rem;
+  padding: 0.25rem 0;
+  margin: auto;
+}
+
+.menu {
   display: none;
 }
 
@@ -96,6 +147,18 @@ nav a:first-of-type {
   margin-bottom: 4px;
 }
 
+@media (max-width: 768px) {
+  header {
+    padding: 0 2.5rem;
+  }
+  .search-container {
+    border: none;
+  }
+  .search-icon {
+    display: none;
+  }
+}
+
 @media all and (max-width: 480px) {
   nav {
     display: flex;
@@ -103,7 +166,7 @@ nav a:first-of-type {
     margin-bottom: 8vh;
     justify-content: flex-start;
   }
-  .hamburger-menu {
+  .menu {
     display: block;
     position: absolute;
     right: 15px;
@@ -126,13 +189,9 @@ nav a:first-of-type {
 
   .nav-list {
     width: 100%;
-    margin-top: 3rem;
+    margin-top: 4rem;
     text-align: center;
     display: none;
-  }
-
-  .active {
-    display: block;
   }
 }
 </style>

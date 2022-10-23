@@ -4,6 +4,7 @@ const { celebrate, Joi, errors, Segments } = require('celebrate')
 const router = express.Router()
 
 const Bungalow = require('../models/bungalow')
+const Image = require('../models/image')
 
 /* GET bungalows listing. */
 router.get(
@@ -42,6 +43,17 @@ router.get('/:bungalowId', async (req, res, next) => {
     const bungalow = await Bungalow.findById(req.params.bungalowId)
 
     if (bungalow) return res.send(bungalow)
+
+    return res.sendStatus(404)
+  } catch (e) {
+    return next(e)
+  }
+})
+router.get('/:bungalowId/image/:imageId', async (req, res, next) => {
+  try {
+    const image = await Image.findById(req.params.imageId)
+
+    if (image) return res.send(image)
 
     return res.sendStatus(404)
   } catch (e) {

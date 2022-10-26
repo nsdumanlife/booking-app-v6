@@ -31,19 +31,53 @@ export default {
 <template lang="pug">
 .login
   form(@submit.prevent='submitLogin')
-    h1 Log in to your account
-    label(for='email') Email:&nbsp;
-      input(v-model='email' id='email' type='email' placeholder='Enter your email' required)
-    label(for='password') Password:&nbsp;
-      input(v-model='password' id='password' type='password' placeholder='Enter your password' required)
-    input(type='submit' value='Log in')
+    h1 Sign in
+    .form-input
+      label(for='email') Email:&nbsp;
+      input#email(v-model='email', type='email', placeholder='Enter your email', required)
+    .form-input
+      label(for='password') Password:&nbsp;
+      input#password(v-model='password', type='password', placeholder='Enter your password', required)
+    input.login-btn(type='submit', value='Log in')
   div(v-if='backendError') {{ backendError }}
-  div Don't have an account yet? <router-link to='/register'>Register</router-link>
+  .register Don't have an account yet? <router-link to='/register'>Register</router-link>
 </template>
 
 <style lang="scss" scoped>
-label {
-  display: block;
-  margin: 1rem 0;
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 27vw;
+
+    .form-input {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .login-btn {
+      align-self: flex-end;
+      padding: 0 1rem;
+    }
+  }
+
+  .register {
+    margin-top: 0.5rem;
+  }
+}
+
+@media all and (max-width: 980px) {
+  .form-input {
+    flex-direction: column;
+  }
 }
 </style>

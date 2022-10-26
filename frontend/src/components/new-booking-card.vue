@@ -1,19 +1,34 @@
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NewBookingCard',
   props: ['bungalow'],
   computed: {
-    ...mapState(['checkInDate', 'checkOutDate']),
     totalPrice() {
       if (new Date(this.checkOutDate) - new Date(this.checkInDate) < 0) return
 
       return (this.bungalow.price * (new Date(this.checkOutDate) - new Date(this.checkInDate))) / (24 * 60 * 60 * 1000)
     },
+    checkInDate: {
+      get() {
+        return this.$store.state.checkInDate
+      },
+      set(value) {
+        this.$store.dispatch('setCheckInDate', value)
+      },
+    },
+    checkOutDate: {
+      get() {
+        return this.$store.state.checkOutDate
+      },
+      set(value) {
+        this.$store.dispatch('setCheckOutDate', value)
+      },
+    },
   },
   methods: {
-    ...mapActions(['createBooking', 'setCheckInDate', 'setCheckOutDate']),
+    ...mapActions(['createBooking']),
     async submitBooking() {
       try {
         await this.createBooking({

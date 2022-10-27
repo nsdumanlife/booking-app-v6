@@ -37,10 +37,10 @@ describe('Bungalows endpoints', () => {
 
     const bungalowRequest = await agent.post('/api/bungalows').send(bungalowToCreate).expect(200)
     const createdBungalow = bungalowRequest.body
-    console.log(createdBungalow)
+
     const bungalow = (await agent.get(`/api/bungalows?name=${createdBungalow.name}`)).body
 
-    expect(bungalow).toMatchObject(bungalowToCreate)
+    expect(bungalow[0]).toMatchObject(bungalowToCreate)
   })
 
   it('get request to /bungalows/:bungalowId should return bungalow', async () => {

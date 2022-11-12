@@ -55,6 +55,7 @@ describe('bookings endpoint', () => {
     // expect(createdUnvalidBooking).toThrow('Please select different date')
     expect(createdBooking.totalPrice).toBe(2500)
     expect(createdBooking.status).toBe('Upcoming')
+    await agent.delete(`/api/bungalows/${createdBungalow._id}`)
   })
   it('get bookings list', async () => {
     const bookingsRequest = await agent.get('/api/bookings').expect(200)

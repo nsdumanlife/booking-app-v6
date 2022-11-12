@@ -41,6 +41,8 @@ describe('Bungalows endpoints', () => {
     const bungalow = (await agent.get(`/api/bungalows?name=${createdBungalow.name}`)).body
 
     expect(bungalow[0]).toMatchObject(bungalowToCreate)
+
+    await agent.delete(`/api/bungalows/${createdBungalow._id}`)
   })
 
   it('get request to /bungalows/:bungalowId should return bungalow', async () => {
@@ -58,6 +60,8 @@ describe('Bungalows endpoints', () => {
     const response = await agent.get(`/api/bungalows/${createdBungalow._id}`).expect(200)
 
     expect(response.body).toMatchObject(bungalowToCreate)
+
+    await agent.delete(`/api/bungalows/${createdBungalow._id}`)
   })
 
   it('post request to /bungalows should create a bungalow', async () => {
@@ -76,6 +80,8 @@ describe('Bungalows endpoints', () => {
     expect(createdBungalow.location).toBe(bungalowToCreate.location)
     expect(createdBungalow.capacity).toBe(bungalowToCreate.capacity)
     expect(createdBungalow.price).toBe(bungalowToCreate.price)
+
+    await agent.delete(`/api/bungalows/${createdBungalow._id}`)
   })
 
   it('create a new review', async () => {
@@ -98,5 +104,7 @@ describe('Bungalows endpoints', () => {
     const createdReview = reviewRequest.body
 
     expect(createdReview).toMatchObject(reviewToCreate)
+
+    await agent.delete(`/api/bungalows/${createdBungalow._id}`)
   })
 })

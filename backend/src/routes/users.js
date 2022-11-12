@@ -14,4 +14,9 @@ router.post('/', async (req, res) => {
   res.send(createdUser)
 })
 
+router.delete('/:id', async (req, res) => {
+  await User.findByIdAndDelete(req.params.id)
+  res.sendStatus(200)
+})
+
 module.exports = router

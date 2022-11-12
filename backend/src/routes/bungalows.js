@@ -116,4 +116,9 @@ router.post(
   }
 )
 
+router.delete('/:id', async (req, res) => {
+  await Bungalow.findByIdAndDelete(req.params.id)
+  res.sendStatus(200)
+})
+
 module.exports = router

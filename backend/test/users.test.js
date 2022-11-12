@@ -14,5 +14,8 @@ describe('Users endpoints', () => {
     const createdUser = userResponse.body
 
     expect(createdUser).toMatchObject(userToCreate)
+
+    // eslint-disable-next-line no-underscore-dangle
+    await request(app).delete(`/api/users/${createdUser._id}`)
   })
 })
